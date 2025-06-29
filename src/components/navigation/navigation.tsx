@@ -1,8 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Box from "@mui/material/Box";
 import { navigations } from "./navigation.data";
 import { Link } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import HardwareWalletModal from "../modal/HardwareWalletModal";
 
 type NavigationData = {
   path: string;
@@ -12,6 +13,10 @@ type NavigationData = {
 const Navigation: FC = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
 
   return (
     <Box
@@ -84,9 +89,11 @@ const Navigation: FC = () => {
           borderRadius: "6px",
           backgroundColor: "#00dbe3"
         }}
+        onClick={handleOpen}
       >
         Connect Wallet
       </Box>
+      <HardwareWalletModal openModal={openModal} handleCloseModal={handleClose} />
     </Box>
   );
 };
